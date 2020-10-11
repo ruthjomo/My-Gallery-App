@@ -6,5 +6,5 @@ urlpatterns=[
 ]
 urlpatterns=[
     #......
-    url('^today/$',views.gallery_of_day,name='galleryToday')
+    url('^today/$',views.GalleryApp_of_day,name='GalleryAppToday')
 ]
