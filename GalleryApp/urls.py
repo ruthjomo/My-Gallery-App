@@ -9,7 +9,7 @@ urlpatterns=[
 ]
 urlpatterns=[
     #......
-    url('^$',views.GalleryApp_of_day,name='GalleryAppToday')
+    url('^$',views.GalleryApp_of_day,name='GalleryAppToday'),
     url('^$',views.index,name = 'index'),
     url(r'^search/', views.search_image, name='search_image'),
     url(r'^location/(?P<image_location>\d+)', views.location_filter, name='location_filter'),
@@ -17,8 +17,5 @@ urlpatterns=[
 
 ]
 
-urlpatterns=[
-   
-]
-if settings.DEBUG:
-    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -37,9 +37,6 @@ def convert_dates(dates):
     day = days[day_number]
     return day  
      
-from django.http  import HttpResponse, Http404
-from django.shortcuts import render, redirect
-from .models import Image, Location, Category
 
 
 
@@ -47,12 +44,12 @@ from .models import Image, Location, Category
 def index(request):
     images = Image.get_all_images()
     locations = Location.objects.all()
-    title = 'Urban Gallery'
+    title = 'Gallery App'
 
     return render(request, 'index.html', {'title':title, 'images':images, 'locations':locations})
 
 
-def single(request,category_name,image_id):
+def unique(request,category_name,image_id):
     # images = Image.get_image_by_id(image_id)
     title = 'Image'
     locations = Location.objects.all()
