@@ -67,7 +67,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-9 col-lg-9">
-                            <a href="{% url 'single' category_name=image.image_category.name image_id=image.id %}"><img
+                            <a href="{% url 'unique' category_name=image.image_category.name image_id=image.id %}"><img
                                     id="img{{image.id}}" src="{{image.picture.cdn_url}}" class="img-thumbnail"
                                     alt="Image" style="cursor:pointer"></a>
                         </div>
