@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
          'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mygallery',
-        'USER': '<>',
-    'PASSWORD':'<>',
+        'USER': 'moringa',
+    'PASSWORD':'Access',
     }
 }
 
