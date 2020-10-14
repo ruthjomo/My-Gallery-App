@@ -5,25 +5,19 @@
 
 {{block.super}}
 
-
 <!-- Landing Page -->
-<div class="banner">
-    <div class="cover">
-        <div class="container image">
-            <h2 id="category">Categories</h2>
+<div class="banner-1">
+    <div class="cover-1">
+        <h2>The images are located in {{location.name}}</h2>
+        <div class="container imageloc">
             <form class="form" role="search" action="{% url 'search_image' %}">
-
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="&#xf3ee; Search by category"
                         name="image_category">
                     <br>
                 </div>
-
-                <small>Trending searches: Tech, Fashion</small>
-
+                <!-- <small>Trending searches: Tech, Fashions</small> -->
             </form>
-            <p>Enjoy every bit! </p>
-            <a href="#gallery">VIEW GALLERY</a>
         </div>
     </div>
 </div>
@@ -31,14 +25,14 @@
 
 <div class="container wrap">
     <!-- Looping through images -->
-    <div class="row" id="gallery">
+    <div class="row">
         {% for image in images %}
-        <!-- displaying images -->
+        <!-- displaying images-->
         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
             <div class="portfolio-wrap ">
                 <div class="portfolio-wrap hovereffect">
                     <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
-                        <img src="{{image.picture.cdn_url}}" href="" class="image" alt="Image">
+                        <img src="{{image.images.url}}" href="" class="image" alt="Image">
                         <div class="overlay">
                             <h4>{{image.name}}</h4>
                         </div>
@@ -50,15 +44,15 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <img src="{% static 'images/notfound.png' %}" alt="" class="oops">
+            <img src="{% static 'images/sorry.png' %}" alt="" class="oops">
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <h2 class="text-center"> Oops! no images for now. Check out again later</h2>
+            <h2 class="text-center"> Oops no images for {{image.image_location.name}}. Please check out later.</h2>
         </div>
     </div>
     {% endfor %}
 
-    <!-- Image details modal -->
+    <!-- Looping through image details modal -->
     {% for image in images %}
     <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
@@ -73,14 +67,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-9 col-lg-9">
-                            <a href="{% url 'single' category_name=image.image_category.name image_id=image.id %}">
-                                <img id="img{{image.id}}" src="{{image.picture.cdn_url}}" class="img-thumbnail" alt="Image" style="cursor:pointer"></a>
-
+                            <a href="{% url 'unique' category_name=image.image_category.name image_id=image.id %}"><img
+                                    id="img{{image.id}}" src="{{image.images.url}}" class="img-thumbnail"
+                                    alt="Image" style="cursor:pointer"></a>
                         </div>
                         <div class="col-md-3">
-                            <h4 class="desc">Location</h4>
+                            <h4>Location</h4>
                             <p>{{image.image_location.name}}</p>
-                            <h4 class="desc">Category</h4>
+                            <h4>Category</h4>
                             <p>{{image.image_category.name}}</p>
                         </div>
                         <div>
@@ -90,9 +84,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <!-- <input class="form-control" type="text" value="{{image.image_link}}" id="link"> -->
                     <button type="button" class="btn btn-info" onclick="copy('img{{image.id}}')">Copy Link</button>
-                    <!-- <input class="form-control" type="text" value="{{image.image_link}}" id="link">
-                    <a onclick="myFunction()"><button type="button"  class="btn btn-primary">Copy Link</button></a> -->
+                    <!-- <a onclick="myFunction()"><button type="button"  class="btn btn-primary">Copy Link</button></a> -->
                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -100,5 +94,4 @@
     </div>
     {% endfor %}
 </div>
-
-{% endblock %} 
+{% endblock %}

@@ -8,31 +8,37 @@
 <!-- Landing Page -->
 <div class="banner-1">
     <div class="cover-1">
-        <h2>The images are located in {{location.name}}</h2>
+        {% if images%}
+        <h2 class="text-center">Found {{ images|length}} images for searched term {{message}}</h2>
+        {% else %}
+        <h2 class="text-center">Found 0 articles for the search term {{message}}</h2>
+        {% endif %}
         <div class="container imageloc">
+            <hr>
+            <br>
             <form class="form" role="search" action="{% url 'search_image' %}">
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <input type="text" class="form-control" placeholder="&#xf3ee; Search by category"
                         name="image_category">
                     <br>
-                </div>
-                <small>Trending searches: Tech, Fashions</small>
+                </div> -->
+                <!-- <small>Trending searches: Tech, fashion</small> -->
             </form>
         </div>
     </div>
 </div>
 
 
-<div class="container wrap">
+<div class="container wrap bg-success">
     <!-- Looping through images -->
     <div class="row">
         {% for image in images %}
-        <!-- displaying images-->
-        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+        <!-- displaying images -->
+        <div class="col-xs-6 col-sm-6  col-md-4 col-lg-3">
             <div class="portfolio-wrap ">
                 <div class="portfolio-wrap hovereffect">
                     <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
-                        <img src="{{image.picture.cdn_url}}" href="" class="image" alt="Image">
+                        <img src="{{image.images.url}}" href="" class="image" alt="Image">
                         <div class="overlay">
                             <h4>{{image.name}}</h4>
                         </div>
@@ -42,17 +48,17 @@
         </div>
         {% empty %}
     </div>
-    <div class="row">
+    <div class="row bg-red">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <img src="{% static 'images/sorry.png' %}" alt="" class="oops">
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <h2 class="text-center"> Oops no images for {{image.image_location.name}}. Please check out later.</h2>
+            <h2 class="text-center"> Oops! no image for {{message}} category.Please check out later.</h2>
         </div>
     </div>
     {% endfor %}
 
-    <!-- Looping through image details modal -->
+    <!-- looping through image details modal class -->
     {% for image in images %}
     <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
@@ -68,7 +74,7 @@
                     <div class="row">
                         <div class="col-md-9 col-lg-9">
                             <a href="{% url 'unique' category_name=image.image_category.name image_id=image.id %}"><img
-                                    id="img{{image.id}}" src="{{image.picture.cdn_url}}" class="img-thumbnail"
+                                    id="img{{image.id}}" src="{{image.images.url}}" class="img-thumbnail"
                                     alt="Image" style="cursor:pointer"></a>
                         </div>
                         <div class="col-md-3">
@@ -94,4 +100,5 @@
     </div>
     {% endfor %}
 </div>
+
 {% endblock %}
