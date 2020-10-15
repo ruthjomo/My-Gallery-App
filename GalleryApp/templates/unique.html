@@ -1,83 +1,41 @@
-{%extends 'base.html'%}
-{% load static%}
-
+{% extends 'base.html' %}
 {% block content %}
-
 {{block.super}}
-
-
-<!-- Landing Page -->
-<div class="banner-1 bg-info">
-    <div class="cover-1">
-        <h2>{{image.image_category.name}} Category</h2>
-        <div class="container imageloc">
-            <form class="form" role="search" action="{% url 'search_image' %}">
-                <!-- <div class="input-group">
-                    <input type="text" class="form-control" placeholder="&#xf3ee; Search by category"
-                        name="image_category">
-                    <br>
-                </div> -->
-                <!-- <small>Trending searches: Tech, Fashion</small> -->
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<!-- displaying image -->
-<div class="container wrap">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="portfolio-wrap ">
-                <div class="portfolio-wrap">
-                    <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
-                        <img src="{{image.images.url}}" href="" class="image" alt="Image">
-                    </a>
-                </div>
+<div class="container">
+  <br><hr>
+  <h1>View Gallery</h1>
+  <hr>
+  <div class="row">
+    {%for image in images%}
+    <div class="col-md-3 p-2">
+      <div class="card">
+        <img src="{{image.pic.url}}"  data-toggle="modal" data-target="#im{{image.id}}" class="card-img-top" alt="{{image.image_name}}">
+          <!-- Modal -->
+        <div class="modal fade" id="im{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <h5 class="modal-title text-center" id="exampleModal3Label">{{image.name}}</h5>
+              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                  <div class="modal-header">
+                      <img src="{{image.pic.url}}"  class="card-img-top" alt="{{image.name}}">
+                  </div>
+              <div class="modal-body">
+                <p>Image Description: "{{image.description}}"</p>
+                  <p class="text-muted">Category:{{image.image_category}}</p>
+                  <p class="text-muted">Location:{{image.image_location}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info"><a href=""><i class="far fa-copy" ></i></a></button>
+                <button type="button" class="btn  btn-outline-info btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+               
+              </div>
             </div>
+          </div>
         </div>
-        <div class="col-md-4">
-            <h4>{{image.name}}</h4>
-            <p class="text-muted">{{image.image_category}} | {{image.image_location}}</p>
-            <p>{{image.description}}</p>
-        </div>
+      </div>
     </div>
-</div>
-
-<!-- Displaying related images -->
-<div class="container-fluid wrap">
-    <h4 class="text-center"> View Related Images </h4>
-    <hr>
-    <!-- Looping through images -->
-    <div class="row">
-        {% for image in image_category %}
-        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-            <div class="portfolio-wrap ">
-                <div class="portfolio-wrap hovereffect">
-                    <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%">
-                        <img src="{{image.images.url}}" href="" class="image" alt="Image">
-                        <div class="overlay">
-                            <h4>
-                                <a href="/image/{{image.image_category.name}}/{{image.id}}">
-                                    {{image.name}}
-                                </a>
-                            </h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-    </div>
-    <div class="col-sm-6 col-md-6 col-lg-6">
-        <img src="" alt="">
-    </div>
-    <div class="card bg-info">
-    <div class="col-sm-6 col-md-6 col-lg-6">
-        <h2 class="text-center"> Oops! no related images now. Please check out later.</h2>
-    </div>
-    </div>
+    {% empty %}
     {% endfor %}
+  </div>
 </div>
-
 {% endblock %}

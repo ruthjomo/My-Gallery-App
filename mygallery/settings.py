@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 # export DJANGO_SETTINGS_MODULE=mygallery.settings
 from pathlib import Path
 import os
-# import django_heroku
-# import dj_database_url
+import django_heroku
+import dj_database_url
 from decouple import config,Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,40 +27,40 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '53fz^55j+5_*ft1h#(rl_4e$7t&z=qy5@+-63tcnh3gfa#d0ia'
 
-# MODE=config("MODE", default="dev")
-# SECRET_KEY = config('SECRET_KEY')
-# DEBUG = config('DEBUG', default=False, cast=bool)
-# # development
-#  if config('MODE')=="dev":
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
-        'TEST': {
-            'NAME': 'test_GalleryApp'
-        }
+                      
+
+    
+MODE=config("MODE", default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+# development
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
        
-#    }
-# # production
-# else:
-#    DATABASES = {
-#        'default': dj_database_url.config(
-#            default=config('DATABASE_URL')
-#        )
-#    }
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
 
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
-# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-# SECURITY WARNING: don't run with debug turned on in production!DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -146,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -165,3 +165,5 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+django_heroku.settings(locals())
